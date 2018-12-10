@@ -8,11 +8,11 @@ public class PlayerHPTextManager : MonoBehaviour {
 	public PlayerCtrl pc;
 	// Use this for initialization
 	void Start () {
-		
+		pc = GameObject.Find("Player").GetComponent<PlayerCtrl>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+		HPText.text = "HP : " + pc.hp;
 	}
 }

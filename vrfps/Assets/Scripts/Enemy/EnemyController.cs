@@ -7,6 +7,7 @@ public class EnemyController : MonoBehaviour
 {
 
     public int HP;
+	public int score;
     public Transform playerTr;
 
 	protected NavMeshAgent nvAgent;
@@ -32,15 +33,19 @@ public class EnemyController : MonoBehaviour
     void OnEnable()
     {
         nvAgent.destination = playerTr.position;
-        StartCoroutine(EnemyState());
     }
 	
 	// Update is called once per frame
 	void Update () {
+		if (HP <= 0)
+		{
+			StopCoroutine(EnemyState());
+			StartCoroutine(EnemyDie());
+		}
         //player.transform;
 	}
 
-    public virtual IEnumerator EnemyState()
+    protected virtual IEnumerator EnemyState()
     {
         while (true)
         {
@@ -48,21 +53,28 @@ public class EnemyController : MonoBehaviour
             float dist = Vector3.Distance(playerTr.position, EnemyTr.position);
             if (dist <= 20)
             {
-                Debug.Log("attack");
-                Ani.SetBool("Attack", true);
-            }
-
-            if (HP <= 0)
-            {
-                nvAgent.isStopped = true;
-                Ani.SetBool("Hit", true);
-                Ani.SetBool("Attack", false);
-
-                yield return new WaitForSeconds(1f);
-                gameObject.SetActive(false);
-                sm.AddScore(100);
+				yield return new WaitForSeconds(2f);
+				while (true)
+				{
+					Debug.Log("attack");
+					Ani.SetBool("Attack", true);
+					pc.GetHit(8);
+					yield return new WaitForSeconds(0.5f);
+				}
             }
             yield return null;
         }
     }
+
+	protected virtual IEnumerator EnemyDie()
+	{
+		nvAgent.isStopped = true;
+		Ani.SetBool("Hit", true);
+		Ani.SetBool("Attack", false);
+
+		yield return new WaitForSeconds(0.3f);
+		sm.AddScore(score);
+		Destroy(gameObject);
+	}
+	
 }

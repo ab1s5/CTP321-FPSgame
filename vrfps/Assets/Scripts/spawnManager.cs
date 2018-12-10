@@ -7,7 +7,7 @@ public class spawnManager : MonoBehaviour
     public bool enableSpawn = false;
     public GameObject Enemy; //Prefab을 받을 public 변수 입니다.
     public int stage;
-    public float radius = 50f;
+    public float radius;
     public Transform playerTr;
 
     void SpawnEnemy()
