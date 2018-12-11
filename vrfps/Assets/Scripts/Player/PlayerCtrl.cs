@@ -9,19 +9,26 @@ public class PlayerCtrl : MonoBehaviour {
     private AudioSource GunShot;
 	public GameObject shot;
     private EnemyController ec;
-	public int hp = 100;
+	public int hp;
+	public TextMesh gameoverText;
+
+	Coroutine coroutine;
 
     // Use this for initialization
     void Start () {
 		screenCenter = new Vector3 (Camera.main.pixelWidth / 2, Camera.main.pixelHeight / 2);
         GunShot = GetComponent<AudioSource>();
-		
-		StartCoroutine(Shooting());
+
+		coroutine = StartCoroutine(Shooting());
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if (hp <= 0)
+		{
+			StopCoroutine(coroutine);
+			Gameover();
+		}
 	}
 
 	private IEnumerator Shooting()
@@ -66,4 +73,21 @@ public class PlayerCtrl : MonoBehaviour {
 		Debug.Log("get damage");
 	}
 
+	void Gameover ()
+	{
+		gameoverText.text = "GAME OVER";
+		GameObject[] enemies;
+		enemies = GameObject.FindGameObjectsWithTag("Enemy");
+		foreach (GameObject enemy in enemies)
+		{
+			if (enemy.name == "enemy1(Clone)")
+			{
+				enemy.GetComponent<EnemyController>().enabled = false;
+				Debug.Log("1111");
+			}
+			else if (enemy.name == "enemy2(Clone)") enemy.GetComponent<SelfDestructEnemy>().enabled = false;
+			//Destroy(enemy);
+			enemy.GetComponent<UnityEngine.AI.NavMeshAgent>().isStopped = true;
+		}
+	}
 }

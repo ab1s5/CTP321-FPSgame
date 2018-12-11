@@ -10,11 +10,19 @@ public class EnemyController : MonoBehaviour
 	public int score;
     public Transform playerTr;
 
+	public LineRenderer attack1;
+	public LineRenderer attack2;
+	public AudioClip audioAttack;
+
+	protected AudioSource audioSource;
+
 	protected NavMeshAgent nvAgent;
     protected Animator Ani;
 	protected Transform EnemyTr;
 	public PlayerCtrl pc;
     public ScoreManager sm;
+
+	Coroutine coroutine;
 
 	// Use this for initialization
 
@@ -25,22 +33,30 @@ public class EnemyController : MonoBehaviour
         Ani = GetComponent<Animator>();
         EnemyTr = GetComponent<Transform>();
         nvAgent.destination = playerTr.position;
-        StartCoroutine(EnemyState());
+        coroutine = StartCoroutine(EnemyState());
         sm = GameObject.Find("ScoreManager").GetComponent<ScoreManager>();
 		pc = GameObject.Find ("Player").GetComponent<PlayerCtrl> ();
-    }
+
+
+		audioSource = GetComponent<AudioSource>();
+	}
 
     void OnEnable()
     {
         nvAgent.destination = playerTr.position;
     }
-	
+
+	void OnDisable()
+	{
+		StopAllCoroutines();
+	}
+
 	// Update is called once per frame
 	void Update () {
 		if (HP <= 0)
 		{
-			StopCoroutine(EnemyState());
-			StartCoroutine(EnemyDie());
+			StopCoroutine(coroutine);
+			coroutine = StartCoroutine(EnemyDie());
 		}
         //player.transform;
 	}
@@ -59,7 +75,19 @@ public class EnemyController : MonoBehaviour
 					Debug.Log("attack");
 					Ani.SetBool("Attack", true);
 					pc.GetHit(8);
-					yield return new WaitForSeconds(0.5f);
+					Color c = attack1.material.GetColor("_TintColor");
+					c.a = 1f;
+					attack1.material.SetColor("_TintColor", c);
+					attack2.material.SetColor("_TintColor", c);
+					audioSource.clip = audioAttack;
+					audioSource.Play();
+					for (int i = 0; i < 10; i++)
+					{
+						c.a -= 0.1f;
+						attack1.material.SetColor("_TintColor", c);
+						attack2.material.SetColor("_TintColor", c);
+						yield return new WaitForSeconds(0.05f);
+					}
 				}
             }
             yield return null;
