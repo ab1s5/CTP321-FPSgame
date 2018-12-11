@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerHPTextManager : MonoBehaviour {
 
-	public UnityEngine.UI.Text HPText;
+    public TextMesh HPText;
 	public PlayerCtrl pc;
 	// Use this for initialization
 	void Start () {

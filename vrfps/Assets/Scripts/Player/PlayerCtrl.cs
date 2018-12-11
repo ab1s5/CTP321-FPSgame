@@ -1,9 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerCtrl : MonoBehaviour {
-
 
 	private Vector3 screenCenter;
     private AudioSource GunShot;
@@ -31,7 +31,7 @@ public class PlayerCtrl : MonoBehaviour {
 			Ray ray = Camera.main.ScreenPointToRay(screenCenter);
 			RaycastHit hit;
 
-			if (Input.GetMouseButtonDown(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began))
+			if (Input.anyKeyDown)
 			{ //vr클릭으로 바꿔야됨
 				GunShot.Play();
 				if (Physics.Raycast(ray, out hit, 500f))
@@ -42,8 +42,16 @@ public class PlayerCtrl : MonoBehaviour {
 						ec.HP -= 10;
 						//ScoreManager.instance.AddScore(10);
 					}
+                    else if (hit.collider.gameObject.CompareTag("Start"))
+                    {
+                        SceneManager.LoadScene("SampleScene");
+                    }
+                    else if (hit.collider.gameObject.CompareTag("Finish"))
+                    {
+                        Application.Quit();
+                    }
 
-				}
+                }
 				shot.SetActive(true);
 				yield return new WaitForSeconds(0.05f);
 				shot.SetActive(false);

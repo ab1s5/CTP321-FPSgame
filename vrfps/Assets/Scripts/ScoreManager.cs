@@ -5,7 +5,7 @@ using UnityEngine;
 public class ScoreManager : MonoBehaviour
 {
     public static ScoreManager instance;
-    public UnityEngine.UI.Text scoreText;
+    public TextMesh scoreText;
     public int score;
     public int stage;
     void Awake()
