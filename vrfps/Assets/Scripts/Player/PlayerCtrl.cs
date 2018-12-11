@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerCtrl : MonoBehaviour {
 
+
 	private Vector3 screenCenter;
     private AudioSource GunShot;
 	public GameObject shot;
@@ -30,7 +31,7 @@ public class PlayerCtrl : MonoBehaviour {
 			Ray ray = Camera.main.ScreenPointToRay(screenCenter);
 			RaycastHit hit;
 
-			if (Input.GetMouseButtonDown(0))
+			if (Input.GetMouseButtonDown(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began))
 			{ //vr클릭으로 바꿔야됨
 				GunShot.Play();
 				if (Physics.Raycast(ray, out hit, 500f))
