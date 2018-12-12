@@ -8,7 +8,9 @@ public class ScoreManager : MonoBehaviour
     public TextMesh scoreText;
     public int score;
     public int stage;
-    void Awake()
+
+	public GameObject spawnmanager;
+	void Awake()
     {
         score = 0;
         stage = 1;
@@ -29,6 +31,11 @@ public class ScoreManager : MonoBehaviour
 
     void Update()
     {
-
+		if (stage == 2)
+		{
+			spawnManager[] sm = spawnmanager.GetComponents<spawnManager>();
+			foreach (spawnManager _sm in sm) _sm.enableSpawn = false;
+			spawnmanager.GetComponent<SpawnManager2>().enableSpawn = true;
+		}
     }
 }
