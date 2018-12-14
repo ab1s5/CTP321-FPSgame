@@ -14,11 +14,14 @@ public class PlayerCtrl : MonoBehaviour {
     public GameObject player;
 
 	Coroutine coroutine;
+	public ScoreManager sm;
 
-    // Use this for initialization
-    void Start () {
+
+	// Use this for initialization
+	void Start () {
 		screenCenter = new Vector3 (Camera.main.pixelWidth / 2, Camera.main.pixelHeight / 2);
         GunShot = GetComponent<AudioSource>();
+		sm = GameObject.Find("ScoreManager").GetComponent<ScoreManager>();
 
         if (Variables.stage == 0)
         {
@@ -46,6 +49,11 @@ public class PlayerCtrl : MonoBehaviour {
 		{
 			StopCoroutine(coroutine);
 			Gameover();
+		}
+		if (sm.stage == 1 && sm.score >= 100)
+		{
+			gameObject.transform.position = new Vector3(163, 3.3f, 22);
+			sm.stage = 2;
 		}
 	}
 
@@ -100,14 +108,14 @@ public class PlayerCtrl : MonoBehaviour {
 		enemies = GameObject.FindGameObjectsWithTag("Enemy");
 		foreach (GameObject enemy in enemies)
 		{
+			enemy.GetComponent<UnityEngine.AI.NavMeshAgent>().isStopped = true;
 			if (enemy.name == "enemy1(Clone)")
 			{
 				enemy.GetComponent<EnemyController>().enabled = false;
-				Debug.Log("1111");
+				//Debug.Log("1111");
 			}
 			else if (enemy.name == "enemy2(Clone)") enemy.GetComponent<SelfDestructEnemy>().enabled = false;
 			//Destroy(enemy);
-			enemy.GetComponent<UnityEngine.AI.NavMeshAgent>().isStopped = true;
 		}
 	}
 }
