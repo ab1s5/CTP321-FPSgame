@@ -7,7 +7,7 @@ public class EnemyController : MonoBehaviour
 {
 
     public int HP;
-	public int score;
+	public int scoreNum;
     public Transform playerTr;
 
 	public LineRenderer attack1;
@@ -20,7 +20,6 @@ public class EnemyController : MonoBehaviour
     protected Animator Ani;
 	protected Transform EnemyTr;
 	public PlayerCtrl pc;
-    public ScoreManager sm;
 
 	Coroutine coroutine;
 
@@ -34,7 +33,6 @@ public class EnemyController : MonoBehaviour
         EnemyTr = GetComponent<Transform>();
         nvAgent.destination = playerTr.position;
         coroutine = StartCoroutine(EnemyState());
-        sm = GameObject.Find("ScoreManager").GetComponent<ScoreManager>();
 		pc = GameObject.Find ("Player").GetComponent<PlayerCtrl> ();
 
 
@@ -56,7 +54,7 @@ public class EnemyController : MonoBehaviour
 		if (HP <= 0)
 		{
 			StopCoroutine(coroutine);
-			coroutine = StartCoroutine(EnemyDie());
+			StartCoroutine(EnemyDie());
 		}
         //player.transform;
 	}
@@ -74,7 +72,7 @@ public class EnemyController : MonoBehaviour
 				{
 					Debug.Log("attack");
 					Ani.SetBool("Attack", true);
-					pc.GetHit(8);
+					pc.GetHit(2*Variables.stage);
 					Color c = attack1.material.GetColor("_TintColor");
 					c.a = 1f;
 					attack1.material.SetColor("_TintColor", c);
@@ -101,7 +99,7 @@ public class EnemyController : MonoBehaviour
 		Ani.SetBool("Attack", false);
 
 		yield return new WaitForSeconds(0.3f);
-		sm.AddScore(score);
+		Variables.AddScore(scoreNum);
 		Destroy(gameObject);
 	}
 	

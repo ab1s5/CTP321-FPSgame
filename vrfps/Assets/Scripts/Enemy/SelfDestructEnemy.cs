@@ -18,11 +18,11 @@ public class SelfDestructEnemy : EnemyController {
 
 				audioSource.clip = audioAttack;
 				audioSource.Play();
-				pc.GetHit(30);
+				pc.GetHit(10*Variables.stage);
 				Debug.Log("detonate");
-				gameObject.transform.position = new Vector3(0, -1000, 0);
-				yield return new WaitForSeconds(2f);
-				Destroy(gameObject);
+                gameObject.transform.position = new Vector3(1000, 1000, 1000);
+                yield return new WaitForSeconds(2f);
+                Destroy(gameObject);
 			}
 			yield return null;
 		}

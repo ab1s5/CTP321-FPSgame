@@ -1743,13 +1743,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HP: 20
-  score: 50
+  scoreNum: 30
   playerTr: {fileID: 0}
   attack1: {fileID: 0}
   attack2: {fileID: 0}
   audioAttack: {fileID: 8300000, guid: 20d577d2d6937a043a8091a46c926b88, type: 3}
   pc: {fileID: 0}
-  sm: {fileID: 0}
 --- !u!136 &136911207637252570
 CapsuleCollider:
   m_ObjectHideFlags: 1

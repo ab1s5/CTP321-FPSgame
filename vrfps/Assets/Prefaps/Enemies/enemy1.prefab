@@ -1802,14 +1802,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8cd9bad51025cd4c911e82f890cff22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 100
-  score: 100
+  HP: 50
+  scoreNum: 50
   playerTr: {fileID: 0}
   attack1: {fileID: 120981110300115322}
   attack2: {fileID: 120576194760592832}
   audioAttack: {fileID: 8300000, guid: 37025960c61b77245872d410c9640b6b, type: 3}
   pc: {fileID: 0}
-  sm: {fileID: 0}
 --- !u!120 &120576194760592832
 LineRenderer:
   m_ObjectHideFlags: 1

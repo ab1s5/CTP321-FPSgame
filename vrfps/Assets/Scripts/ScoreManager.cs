@@ -1,34 +1,31 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ScoreManager : MonoBehaviour
 {
     public static ScoreManager instance;
     public TextMesh scoreText;
-    public int score;
-    public int stage;
+    public TextMesh stageText;
     void Awake()
     {
-        score = 0;
-        stage = 1;
         if (!instance)
             instance = this;
     }
 
-    public void AddScore(int num)
-    {
-        score += num*stage;
-        scoreText.text = "Score : " + score;
-    }
-
     void Start()
     {
-
+        stageText.text = "Stage : " + Variables.stage;
     }
 
     void Update()
     {
-
+        scoreText.text = "Score : " + Variables.score;
+        if (Variables.score >= Variables.stage * 500)
+        {
+            Variables.AddStage();
+            SceneManager.LoadScene("Game");
+        }
     }
 }

@@ -11,6 +11,7 @@ public class PlayerCtrl : MonoBehaviour {
     private EnemyController ec;
 	public int hp;
 	public TextMesh gameoverText;
+    public GameObject player;
 
 	Coroutine coroutine;
 
@@ -19,7 +20,24 @@ public class PlayerCtrl : MonoBehaviour {
 		screenCenter = new Vector3 (Camera.main.pixelWidth / 2, Camera.main.pixelHeight / 2);
         GunShot = GetComponent<AudioSource>();
 
-		coroutine = StartCoroutine(Shooting());
+        if (Variables.stage == 0)
+        {
+            player.transform.position = new Vector3(0, 0, 0);
+        }
+        else if (Variables.stage % 3 == 1)
+        {
+            player.transform.position = new Vector3(0, 0, 0);
+        }
+        else if (Variables.stage % 3 == 2)
+        {
+            player.transform.position = new Vector3(126, 0, 145);
+        }
+        else
+        {
+            player.transform.position = new Vector3(120, 0, -90);
+        }
+
+        coroutine = StartCoroutine(Shooting());
 	}
 	
 	// Update is called once per frame
@@ -51,7 +69,9 @@ public class PlayerCtrl : MonoBehaviour {
 					}
                     else if (hit.collider.gameObject.CompareTag("Start"))
                     {
-                        SceneManager.LoadScene("SampleScene");
+                        Debug.Log("hi");
+                        Variables.AddStage();
+                        SceneManager.LoadScene("Game");
                     }
                     else if (hit.collider.gameObject.CompareTag("Finish"))
                     {
