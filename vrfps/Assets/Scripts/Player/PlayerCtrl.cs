@@ -21,7 +21,8 @@ public class PlayerCtrl : MonoBehaviour {
 	void Start () {
 		screenCenter = new Vector3 (Camera.main.pixelWidth / 2, Camera.main.pixelHeight / 2);
         GunShot = GetComponent<AudioSource>();
-		sm = GameObject.Find("ScoreManager").GetComponent<ScoreManager>();
+        sm = ScoreManager.instance;
+        //sm = GameObject.Find("ScoreManager").GetComponent<ScoreManager>();
 
         if (Variables.stage == 0)
         {
