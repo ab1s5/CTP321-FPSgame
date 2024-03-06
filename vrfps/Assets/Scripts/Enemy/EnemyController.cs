@@ -23,7 +23,6 @@ public class EnemyController : MonoBehaviour
 
 	Coroutine coroutine;
 
-	private int level = 0;
 	// Use this for initialization
 
     void Awake()
@@ -57,7 +56,6 @@ public class EnemyController : MonoBehaviour
 			StopCoroutine(coroutine);
 			StartCoroutine(EnemyDie());
 		}
-		
         //player.transform;
 	}
 

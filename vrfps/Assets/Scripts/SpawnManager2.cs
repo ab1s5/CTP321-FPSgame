@@ -23,7 +23,7 @@ public class SpawnManager2 : MonoBehaviour
 	void Start()
 	{
 		playerTr = GameObject.Find("Player").transform;
-		stage = GameObject.Find("ScoreManager").GetComponent<ScoreManager>().score;
+		stage = Variables.stage;
 		InvokeRepeating("SpawnEnemy", 0, interval); //3초후 부터, SpawnEnemy함수를 1초마다 반복해서 실행 시킵니다.
 	}
 	void Update()
